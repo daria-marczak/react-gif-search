@@ -1,0 +1,16 @@
+@import "https://fonts.googleapis.com/css?family=Abril+Fatface|Roboto";
+
+$fatface: "Abril Fatface", serif;
+$roboto: "Roboto", sans-serif;
+
+$orange: #f1c40f;
+
+body {
+    font-family: $roboto;
+}
+
+h1 {
+    font-family: $fatface;
+    font-size: 8rem;
+    color: $orange;
+}
