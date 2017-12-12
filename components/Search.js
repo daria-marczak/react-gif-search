@@ -28,7 +28,8 @@ Search = React.createClass({
                 width: "90%",
                 maxWidth: "350px"
             };
-            return
+            return (
                 <input type="text" onChange={this.handleChange} placeholder="What do you search for?" style={styles} value={this.state.searchTerm} />
+            )
     }
 });
