@@ -15,31 +15,48 @@ App = React.createClass({
         this.setState({
             loading: true
         });
-        this.getGif(searchingText, function(gif) {
+        this.getGif(searchingText)
+        .then(responseText => {
+            var data = JSON.parse(responseText).data;
             this.setState({
                 loading: false,
-                gif: gif,
-                searchingText: searchingText
-            });
-        }.bind(this));
-    },
-
-    getGif: function(searchingText, callback) {
-        var url = GIPHY_API_URL + "/v1/gifs/random?api_key=" + GIPHY_PUB_KEY + "&tag=" + searchingText;
-        var xhr = new XMLHttpRequest();
-        xhr.open("GET", url);
-        xhr.onload = function() {
-            if (xhr.status === 200) {
-                var data = JSON.parse(xhr.responseText).data;
-                var gif= {
+                gif: {
                     url: data.fixed_width_downsampled_url,
                     sourceUrl: data.url
-                };
-                callback(gif);
-            }
-        };
+                }
+            });
+        })
+        .catch(error => console.log("Whoops", error));
+    },
+
+    getGif: function(searchingText) {
+        const  url = GIPHY_API_URL + "/v1/gifs/random?api_key=" + GIPHY_PUB_KEY + "&tag=" + searchingText;
+
+        return new Promise(function(resolve, reject) {
+            const xhr = new XMLHttpRequest();
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    resolve (xhr.responseText);
+                } else {
+                    reject(new Error(this.responseText));
+                }
+            };
+            xhr.onerror = function() {
+                reject(new Error (
+                    `XMLHttpRequest Error: ${this.responseText}`));
+            };
+            xhr.open("GET", url);
+            xhr.send();
+        })
+
+
+
+
+
+        xhr.open("GET", url);
         xhr.send();
     },
+
     render: function() {
         var styles = {
             margin: "0 auto",
