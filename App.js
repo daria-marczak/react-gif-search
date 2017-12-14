@@ -16,17 +16,17 @@ App = React.createClass({
             loading: true
         });
         this.getGif(searchingText)
-        .then(responseText => {
-            var data = JSON.parse(responseText).data;
-            this.setState({
-                loading: false,
-                gif: {
-                    url: data.fixed_width_downsampled_url,
-                    sourceUrl: data.url
-                }
-            });
-        })
-        .catch(error => console.log("Whoops", error));
+	        .then(responseText => {
+	            var data = JSON.parse(responseText).data;
+	            this.setState({
+	                loading: false,
+	                gif: {
+	                    url: data.fixed_width_downsampled_url,
+	                    sourceUrl: data.url
+	                }
+	            });
+	        })
+	        .catch(error => console.log("Whoops", error));
     },
 
     getGif: function(searchingText) {
@@ -42,19 +42,11 @@ App = React.createClass({
                 }
             };
             xhr.onerror = function() {
-                reject(new Error (
-                    `XMLHttpRequest Error: ${this.responseText}`));
+                reject(new Error (`XMLHttpRequest Error: ${this.responseText}`));
             };
             xhr.open("GET", url);
             xhr.send();
         })
-
-
-
-
-
-        xhr.open("GET", url);
-        xhr.send();
     },
 
     render: function() {
